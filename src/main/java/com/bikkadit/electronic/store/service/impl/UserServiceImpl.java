@@ -6,6 +6,8 @@ import com.bikkadit.electronic.store.entity.User;
 import com.bikkadit.electronic.store.repository.UserRepository;
 import com.bikkadit.electronic.store.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ModelMapper mapper;
 
+    private static Logger logger= LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     public UserDto createUser(UserDto userDto) {
+        logger.info("Sending request to repository for create user :{}");
 
         // generate unique id in string format
         String userId = UUID.randomUUID().toString();
@@ -36,11 +41,14 @@ public class UserServiceImpl implements UserService {
 
         // entity ->dto
         UserDto newDto = mapper.map(user,UserDto.class);
+
+        logger.info("User Created In Dataase :{}");
         return newDto;
     }
 
     @Override
     public UserDto updateUser(UserDto userDto, String userId) {
+        logger.info("");
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(AppConstants.USER_NOT_FOUND));
         user.setName(userDto.getName());
         // email update
