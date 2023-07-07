@@ -33,9 +33,9 @@ public class UserController {
      */
     @PostMapping
     public ResponseEntity<UserDto>  createUser(@RequestBody UserDto userDto) {
-        logger.info("Before Initializing Create User in Controller:{}"+userDto);
+        logger.info("Before Initializing createUser Method of Service:{}"+userDto);
         UserDto user = userService.createUser(userDto);
-        logger.info("After Execution Createing User in Controller:{}"+userDto);
+        logger.info("After Execution Creating User Method :{}"+userDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
@@ -51,9 +51,9 @@ public class UserController {
      */
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable String userId) {
-        logger.info("Before Initializing Update User in Controller:{}"+userDto);
+        logger.info("Before Initializing updateUser Method Of Service for Id:{}"+userDto);
         UserDto userDto1 = userService.updateUser(userDto, userId);
-        logger.info("After Execution Updating User in Controller:{}"+userDto);
+        logger.info("After Execution Updating User Method :{}"+userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.OK);
     }
 
@@ -67,10 +67,10 @@ public class UserController {
      */
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponseMessage> deleteUser(@PathVariable String userId) {
-        logger.info("Before Initializing Delete User in Controller:{}"+userId);
+        logger.info("Before Initializing deleteUser Method Of Service for Id :{}"+userId);
         userService.deleteUser(userId);
         ApiResponseMessage message = ApiResponseMessage.builder().message(AppConstants.USER_DELETED).success(true).status(HttpStatus.OK).build();
-        logger.info("After Execution Deleting User in Controller:{}"+userId);
+        logger.info("After Execution deleting User Method :{}"+userId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
@@ -84,7 +84,7 @@ public class UserController {
      */
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUser() {
-        logger.info("Initializing Get All User in Controller:{}");
+        logger.info("Initializing getAllUser Method of Service:{}");
         return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
 
     }
@@ -100,7 +100,7 @@ public class UserController {
      */
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable String userId) {
-        logger.info("Initializing Get Single User By Using Id in Controller:{}"+userId);
+        logger.info("Initializing getUserById Method of Service for Id:{}"+userId);
         return  new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 
@@ -116,7 +116,7 @@ public class UserController {
      */
     @GetMapping("/email/{email}")
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {
-        logger.info("Initializing Get User By Email in Controller:{}"+email);
+        logger.info("Initializing getUserByEmail Method Of Service for Email:{}"+email);
         return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
     }
 
@@ -131,7 +131,7 @@ public class UserController {
      */
     @GetMapping("/search/{keywords}")
     public ResponseEntity<List<UserDto>> searchUser(@PathVariable String keywords) {
-        logger.info("Initializing Search User By Using Keywords in Controller:{}"+keywords);
+        logger.info("Initializing searchUser Method Of Service for Keyword:{}"+keywords);
         return new ResponseEntity<>(userService.searchUser(keywords), HttpStatus.OK);
     }
 
