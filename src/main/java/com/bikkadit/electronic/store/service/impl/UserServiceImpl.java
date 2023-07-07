@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         // entity ->dto
         UserDto newDto = mapper.map(user,UserDto.class);
 
-        logger.info("User Created In Dataase :{}");
+        logger.info("User Created In Database :{}");
         return newDto;
     }
 
