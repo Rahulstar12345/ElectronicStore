@@ -35,7 +35,7 @@ public class UserController {
     public ResponseEntity<UserDto>  createUser(@RequestBody UserDto userDto) {
         logger.info("Before Initializing createUser Method of Service:{}"+userDto);
         UserDto user = userService.createUser(userDto);
-        logger.info("After Execution Creating User Method in Database :{}"+userDto);
+        logger.info("After Execution Creating User Method in Database  :{}"+userDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
