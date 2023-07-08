@@ -3,6 +3,7 @@ package com.bikkadit.electronic.store.service.impl;
 import com.bikkadit.electronic.store.constant.AppConstants;
 import com.bikkadit.electronic.store.dto.UserDto;
 import com.bikkadit.electronic.store.entity.User;
+import com.bikkadit.electronic.store.exception.ResourceNotFoundException;
 import com.bikkadit.electronic.store.repository.UserRepository;
 import com.bikkadit.electronic.store.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto, String userId) {
         logger.info("");
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(AppConstants.USER_NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
         user.setName(userDto.getName());
         // email update
         user.setAbout(userDto.getAbout());
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(AppConstants.USER_NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
         // delete user
         userRepository.delete(user);
 
@@ -82,14 +83,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(AppConstants.USER_NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
 
         return mapper.map(user,UserDto.class);
     }
 
     @Override
     public UserDto getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException(AppConstants.USER_NOT_FOUND));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
 
         return mapper.map(user,UserDto.class);
     }
