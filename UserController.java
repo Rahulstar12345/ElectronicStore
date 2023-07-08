@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public class UserController {
      * @return user
      */
     @PostMapping
-    public ResponseEntity<UserDto>  createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto>  createUser(@Valid @RequestBody UserDto userDto) {
         logger.info("Before Initializing createUser Method of Service:{}"+userDto);
         UserDto user = userService.createUser(userDto);
         logger.info("After Execution Creating User Method in Database  :{}"+userDto);
@@ -50,7 +51,7 @@ public class UserController {
      * @return userDto1
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable String userId) {
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable String userId) {
         logger.info("Before Initializing updateUser Method Of Service for Id:{}"+userDto);
         UserDto userDto1 = userService.updateUser(userDto, userId);
         logger.info("After Execution Updating User Method in Database:{}"+userDto);
