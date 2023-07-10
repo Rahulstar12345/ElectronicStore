@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        logger.info("Sending request to repository for create user :{}");
+        logger.info("Sending request to repository method for create user :{}");
 
         // generate unique id in string format
         String userId = UUID.randomUUID().toString();
@@ -49,6 +49,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto, String userId) {
+        logger.info("Sending request to repository method for update user :{}");
+
         logger.info("");
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
         user.setName(userDto.getName());
@@ -61,45 +63,61 @@ public class UserServiceImpl implements UserService {
         // save data
         User updatedUser = userRepository.save(user);
         UserDto updatedDto = mapper.map(user,UserDto.class);
+        logger.info("User Updated  In Database :{}");
 
         return updatedDto;
     }
 
     @Override
     public void deleteUser(String userId) {
+        logger.info("Sending request to repository method for delete user :{}");
+
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
         // delete user
         userRepository.delete(user);
+        logger.info("User Deleted  In Database :{}");
+
 
     }
 
     @Override
     public List<UserDto> getAllUser() {
+        logger.info("Sending request to repository method for get all user :{}");
+
         List<User> users = userRepository.findAll();
         List<UserDto> dtoList = users.stream().map(user -> mapper.map(user,UserDto.class)).collect(Collectors.toList());
+        logger.info("Get All User From the Database :{}");
 
         return dtoList;
     }
 
     @Override
     public UserDto getUserById(String userId) {
+        logger.info("Sending request to repository method for getallUserById :{}");
+
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
+        logger.info("Get Id From the Database :{}");
 
         return mapper.map(user,UserDto.class);
     }
 
     @Override
     public UserDto getUserByEmail(String email) {
+        logger.info("Sending request to repository method for getallUserByEmail :{}");
+
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
+        logger.info("Get Id From the Database Using Email :{}");
 
         return mapper.map(user,UserDto.class);
     }
 
     @Override
     public List<UserDto> searchUser(String keyword) {
+        logger.info("Sending request to repository method for searchUser :{}");
 
         List<User> users = userRepository.findByNameContaining(keyword);
         List<UserDto> dtoList = users.stream().map(user -> mapper.map(user,UserDto.class)).collect(Collectors.toList());
+        logger.info("User Search From  the Database Using Keyword :{}");
 
         return dtoList;
     }
