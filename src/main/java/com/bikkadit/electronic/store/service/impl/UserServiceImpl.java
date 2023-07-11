@@ -1,15 +1,21 @@
 package com.bikkadit.electronic.store.service.impl;
 
 import com.bikkadit.electronic.store.constant.AppConstants;
+import com.bikkadit.electronic.store.dto.PageableResponse;
 import com.bikkadit.electronic.store.dto.UserDto;
 import com.bikkadit.electronic.store.entity.User;
 import com.bikkadit.electronic.store.exception.ResourceNotFoundException;
+import com.bikkadit.electronic.store.helper.Helper;
 import com.bikkadit.electronic.store.repository.UserRepository;
 import com.bikkadit.electronic.store.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -81,14 +87,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser() {
+    public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir) {
         logger.info("Sending request to repository method for get all user :{}");
 
-        List<User> users = userRepository.findAll();
-        List<UserDto> dtoList = users.stream().map(user -> mapper.map(user,UserDto.class)).collect(Collectors.toList());
+        Sort sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+
+
+        // pageNumber default starts from 0
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
+        Page<User> page = userRepository.findAll(pageable);
+        PageableResponse<UserDto> response = Helper.getPageableResponse(page, UserDto.class);
+
         logger.info("Get All User From the Database :{}");
 
-        return dtoList;
+        return response;
     }
 
     @Override
