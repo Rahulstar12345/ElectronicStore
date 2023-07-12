@@ -1,6 +1,6 @@
 package com.bikkadit.electronic.store.service.impl;
 
-import com.bikkadit.electronic.store.exception.BadApiRequest;
+import com.bikkadit.electronic.store.exception.BadApiRequestException;
 import com.bikkadit.electronic.store.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +24,13 @@ public class FileServiceImpl implements FileService {
         String filename = UUID.randomUUID().toString();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         String fileNameWithExtension = filename + extension;
-        String fullPathWithFileName = path + File.separator + fileNameWithExtension;
+        String fullPathWithFileName = path + fileNameWithExtension;
 
+        logger.info("Full image path: {}",fullPathWithFileName);
         if(extension.equalsIgnoreCase(".png")||extension.equalsIgnoreCase(".jpg")||extension.equalsIgnoreCase("jpeg")){
 
             // save file
+            logger.info("file extension is {} ",extension);
             File folder=new File(path);
 
             if(!folder.exists()){
@@ -40,7 +42,7 @@ public class FileServiceImpl implements FileService {
             return fileNameWithExtension;
 
         }else{
-            throw new BadApiRequest("File with this "+extension+ "not allowed !!");
+            throw new BadApiRequestException("File with this "+extension+ " not allowed !!");
         }
     }
 

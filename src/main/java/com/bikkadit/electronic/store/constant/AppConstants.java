@@ -7,5 +7,7 @@ public class AppConstants {
 
     public static final String USER_DELETED="User Is Deleted Successfully !!";
 
+    public static  final String IMAGE_UPLOADED="Image Is Successfully Uploaded !!";
+
 
 }
