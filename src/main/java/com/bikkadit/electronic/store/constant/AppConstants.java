@@ -9,5 +9,10 @@ public class AppConstants {
 
     public static  final String IMAGE_UPLOADED="Image Is Successfully Uploaded !!";
 
+    public static final String CATEGORY_NOT_FOUND="Category Not Found With Given Id !!";
+
+    public static final String CATEGORY_DELETED="Category Is Deleted Successfully !!";
+
+
 
 }
