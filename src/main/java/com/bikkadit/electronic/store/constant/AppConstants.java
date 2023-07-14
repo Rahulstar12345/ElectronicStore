@@ -13,6 +13,10 @@ public class AppConstants {
 
     public static final String CATEGORY_DELETED="Category Is Deleted Successfully !!";
 
+    public static final String PRODUCT_NOT_FOUND="Product Not Found With Given Id !!";
+
+    public static final String PRODUCT_DELETED="Product Is Deleted Successfully !!";
+
 
 
 }
