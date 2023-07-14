@@ -2,6 +2,9 @@ package com.bikkadit.electronic.store.service;
 
 import com.bikkadit.electronic.store.dto.CategoryDto;
 import com.bikkadit.electronic.store.dto.PageableResponse;
+import com.bikkadit.electronic.store.dto.UserDto;
+
+import java.util.List;
 
 public interface CategoryService {
     // create
@@ -25,4 +28,6 @@ public interface CategoryService {
     CategoryDto getCategoryId(String categoryId);
 
     // search
+
+
 }

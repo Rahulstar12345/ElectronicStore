@@ -1,5 +1,6 @@
 package com.bikkadit.electronic.store.dto;
 
+import com.bikkadit.electronic.store.validate.ImageNameValid;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -22,7 +23,8 @@ public class CategoryDto {
     @NotBlank(message = "Description required !!")
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "Image is Required !!")
+    @ImageNameValid
     private String coverImage;
 
 }
