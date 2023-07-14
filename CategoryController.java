@@ -3,14 +3,26 @@ package com.bikkadit.electronic.store.controller;
 import com.bikkadit.electronic.store.constant.AppConstants;
 import com.bikkadit.electronic.store.dto.ApiResponseMessage;
 import com.bikkadit.electronic.store.dto.CategoryDto;
+import com.bikkadit.electronic.store.dto.ImageResponse;
 import com.bikkadit.electronic.store.dto.PageableResponse;
 import com.bikkadit.electronic.store.service.CategoryService;
+import com.bikkadit.electronic.store.service.FileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
@@ -18,6 +30,16 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${category.profile.image.path}")
+    private String imageUploadPath;
+
+    private static Logger logger= LoggerFactory.getLogger(CategoryController.class);
+
 
     // create
     @PostMapping
@@ -66,6 +88,34 @@ public class CategoryController {
         CategoryDto categoryDto = categoryService.getCategoryId(categoryId);
         return ResponseEntity.ok(categoryDto);
 
+    }
+
+    // search category
+
+    // cover category image
+
+    @PostMapping("/image/{categoryId}")
+    public ResponseEntity<ImageResponse> coverCategoryImage(@RequestParam("categoryImage")MultipartFile image,@PathVariable String categoryId) throws IOException {
+        String imageName = fileService.uploadFile(image, imageUploadPath);
+
+        CategoryDto category = categoryService.getCategoryId(categoryId);
+        category.setCoverImage(imageName);
+        CategoryDto categoryDto = categoryService.update(category, categoryId);
+        ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).message(AppConstants.IMAGE_UPLOADED).success(true).status(HttpStatus.CREATED).build();
+
+        return  new ResponseEntity<>(imageResponse,HttpStatus.CREATED);
+    }
+
+    // serve category image
+
+    @GetMapping("/image/{categoryId}")
+    public void serveCategoryImage(@PathVariable String categoryId, HttpServletResponse response) throws IOException {
+        CategoryDto category = categoryService.getCategoryId(categoryId);
+
+        logger.info("Category image name : {} ",category.getCoverImage());
+        InputStream resource = fileService.getResource(imageUploadPath, category.getCoverImage());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource, response.getOutputStream());
     }
 
     }
