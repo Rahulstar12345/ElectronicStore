@@ -1,5 +1,6 @@
 package com.bikkadit.electronic.store.dto;
 
+import com.bikkadit.electronic.store.entity.Category;
 import com.bikkadit.electronic.store.validate.ImageNameValid;
 import lombok.*;
 
@@ -34,5 +35,7 @@ public class ProductDto {
 
     @ImageNameValid
     private String productImageName;
+    private CategoryDto category;
+
 
 }

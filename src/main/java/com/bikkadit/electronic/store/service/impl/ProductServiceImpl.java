@@ -3,9 +3,11 @@ package com.bikkadit.electronic.store.service.impl;
 import com.bikkadit.electronic.store.constant.AppConstants;
 import com.bikkadit.electronic.store.dto.PageableResponse;
 import com.bikkadit.electronic.store.dto.ProductDto;
+import com.bikkadit.electronic.store.entity.Category;
 import com.bikkadit.electronic.store.entity.Product;
 import com.bikkadit.electronic.store.exception.ResourceNotFoundException;
 import com.bikkadit.electronic.store.helper.Helper;
+import com.bikkadit.electronic.store.repository.CategoryRepository;
 import com.bikkadit.electronic.store.repository.ProductRepository;
 import com.bikkadit.electronic.store.service.ProductService;
 import org.modelmapper.ModelMapper;
@@ -27,6 +29,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public ProductDto create(ProductDto productDto) {
@@ -104,4 +109,24 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> page = productRepository.findByTitleContaining(subTitle,pageable);
 
         return Helper.getPageableResponse(page,ProductDto.class);    }
+
+    @Override
+    public ProductDto createWithCategory(ProductDto productDto, String categoryId) {
+        // fetch the category from db
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
+
+        Product product = mapper.map(productDto, Product.class);
+
+
+        // product id
+        String productId = UUID.randomUUID().toString();
+        product.setProductId(productId);
+
+        //added date
+        product.setAddedDate(new Date());
+        product.setCategory(category);
+        Product saveProduct = productRepository.save(product);
+
+        return mapper.map(saveProduct,ProductDto.class);
+    }
 }
