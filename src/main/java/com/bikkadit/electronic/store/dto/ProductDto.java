@@ -1,15 +1,17 @@
 package com.bikkadit.electronic.store.dto;
 
+import com.bikkadit.electronic.store.validate.ImageNameValid;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@Builder
 public class ProductDto {
 
     private String productId;
@@ -29,4 +31,8 @@ public class ProductDto {
     private boolean live;
 
     private boolean stock;
+
+    @ImageNameValid
+    private String productImageName;
+
 }

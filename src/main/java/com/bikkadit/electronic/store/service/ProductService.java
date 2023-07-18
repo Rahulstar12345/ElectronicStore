@@ -12,7 +12,7 @@ public interface ProductService {
 
     // update
 
-    ProductDto update(ProductDto productDto,String productId);
+    ProductDto updateProduct(ProductDto productDto,String productId);
 
     // delete
 

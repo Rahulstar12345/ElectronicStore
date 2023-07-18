@@ -17,6 +17,7 @@ public class AppConstants {
 
     public static final String PRODUCT_DELETED="Product Is Deleted Successfully !!";
 
+    public static final String PRODUCT_IMAGE="Product Image Is Successfully Uploaded !!";
 
 
 }

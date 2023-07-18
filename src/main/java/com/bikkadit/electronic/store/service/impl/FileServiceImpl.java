@@ -27,7 +27,7 @@ public class FileServiceImpl implements FileService {
         String fullPathWithFileName = path + fileNameWithExtension;
 
         logger.info("Full image path: {}",fullPathWithFileName);
-        if(extension.equalsIgnoreCase(".png")||extension.equalsIgnoreCase(".jpg")||extension.equalsIgnoreCase("jpeg")){
+        if(extension.equalsIgnoreCase("jpeg")||extension.equalsIgnoreCase(".jpg")||extension.equalsIgnoreCase(".png")){
 
             // save file
             logger.info("file extension is {} ",extension);
