@@ -1,12 +1,10 @@
 package com.bikkadit.electronic.store.controller;
 
 import com.bikkadit.electronic.store.constant.AppConstants;
-import com.bikkadit.electronic.store.dto.ApiResponseMessage;
-import com.bikkadit.electronic.store.dto.CategoryDto;
-import com.bikkadit.electronic.store.dto.ImageResponse;
-import com.bikkadit.electronic.store.dto.PageableResponse;
+import com.bikkadit.electronic.store.dto.*;
 import com.bikkadit.electronic.store.service.CategoryService;
 import com.bikkadit.electronic.store.service.FileService;
+import com.bikkadit.electronic.store.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private FileService fileService;
@@ -118,5 +118,15 @@ public class CategoryController {
         StreamUtils.copy(resource, response.getOutputStream());
     }
 
+    // create product with category
+
+    @PostMapping("/{categoryId}/products")
+    public ResponseEntity<ProductDto> createProductWithCategory(
+            @PathVariable String categoryId,
+            @RequestBody ProductDto productDto
+    ){
+        ProductDto productWithCategory = productService.createWithCategory(productDto, categoryId);
+        return new ResponseEntity<>(productWithCategory,HttpStatus.CREATED);
+    }
     }
 
