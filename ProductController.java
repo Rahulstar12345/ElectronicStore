@@ -1,26 +1,37 @@
 package com.bikkadit.electronic.store.controller;
 
 import com.bikkadit.electronic.store.constant.AppConstants;
-import com.bikkadit.electronic.store.dto.ApiResponseMessage;
-import com.bikkadit.electronic.store.dto.PageableResponse;
-import com.bikkadit.electronic.store.dto.ProductDto;
+import com.bikkadit.electronic.store.dto.*;
+import com.bikkadit.electronic.store.service.FileService;
 import com.bikkadit.electronic.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-
     @Autowired
     private ProductService productService;
+    @Autowired
+    private FileService fileService;
+    @Value("${product.image.path}")
+    private String imageUploadPath;
 
     // create
 
     @PostMapping
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> createProduct(@Valid @RequestBody ProductDto productDto) {
 
         ProductDto createdProduct = productService.create(productDto);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
@@ -29,12 +40,13 @@ public class ProductController {
     //update
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto,@PathVariable String productId) {
-        ProductDto updatedProduct = productService.update(productDto,productId);
+    public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto productDto,@PathVariable String productId) {
+        ProductDto updatedProduct = productService.updateProduct(productDto,productId);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
     // delete
+
     @DeleteMapping("/{productId}")
     public ResponseEntity<ApiResponseMessage> deleteProduct(@PathVariable String productId){
 
@@ -66,6 +78,7 @@ public class ProductController {
     }
 
     // get all live
+
     @GetMapping("/live")
     public ResponseEntity<PageableResponse<ProductDto>> getAllLive(
             @RequestParam(value = "pageNumber",defaultValue = "0",required = false) int pageNumber,
@@ -91,5 +104,34 @@ public class ProductController {
         return new ResponseEntity<>(pageableResponse,HttpStatus.OK);
     }
 
+    // upload image
+
+    @PostMapping("/image/{productId}")
+    public ResponseEntity<ImageResponse> uploadProductImage(@RequestParam("productImage")MultipartFile image,
+                                                            @PathVariable String productId) throws IOException {
+        String fileName = fileService.uploadFile(image, imageUploadPath);
+
+        ProductDto product = productService.getSingleId(productId);
+
+        product.setProductImageName(fileName);
+
+        ProductDto updateProduct = productService.updateProduct(product, productId);
+
+
+        ImageResponse response = ImageResponse.builder().imageName(updateProduct.getProductImageName()).message(AppConstants.PRODUCT_IMAGE)
+                .success(true).status(HttpStatus.CREATED).build();
+        return  new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
+    //serve product image
+
+    @GetMapping("/image/{productId}")
+    public void serveUserImage(@PathVariable String productId, HttpServletResponse response) throws IOException {
+
+        ProductDto productDto = productService.getSingleId(productId);
+        InputStream resource = fileService.getResource(imageUploadPath, productDto.getProductImageName());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+    }
 
     }

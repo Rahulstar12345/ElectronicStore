@@ -169,7 +169,6 @@ public class UserController {
 
         ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).message(AppConstants.IMAGE_UPLOADED).success(true).status(HttpStatus.CREATED).build();
         return  new ResponseEntity<>(imageResponse,HttpStatus.CREATED);
-
     }
 
     //serve user image
@@ -182,7 +181,6 @@ public class UserController {
         InputStream resource = fileService.getResource(imageUploadPath, user.getImageName());
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource,response.getOutputStream());
-
     }
 
    }
