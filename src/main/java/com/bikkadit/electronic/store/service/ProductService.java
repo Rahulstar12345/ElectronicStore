@@ -36,4 +36,10 @@ public interface ProductService {
     PageableResponse<ProductDto> searchByTitle(String subTitle,int pageNumber,int pageSize,String sortBy,String sortDir);
 
 
+    // crete product with category
+
+    ProductDto createWithCategory(ProductDto productDto,String categoryId);
+
+
+
 }
