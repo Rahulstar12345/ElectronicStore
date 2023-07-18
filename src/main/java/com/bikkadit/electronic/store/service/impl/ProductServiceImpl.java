@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto update(ProductDto productDto, String productId) {
+    public ProductDto updateProduct(ProductDto productDto, String productId) {
         // fetch the product of given id
         Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.PRODUCT_NOT_FOUND));
         product.setTitle(productDto.getTitle());
@@ -56,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
         product.setQuantity(productDto.getQuantity());
         product.setLive(productDto.isLive());
         product.setStock(productDto.isStock());
+        product.setProductImageName(productDto.getProductImageName());
 
         // save the entity
 
