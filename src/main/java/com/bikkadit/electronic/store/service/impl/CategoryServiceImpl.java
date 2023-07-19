@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
-            logger.info("Initiating the Service call for the save category data ");
+        logger.info("Initiating the Service call for the save category data ");
 
         // creating categoryId :randomly
         String categoryId = UUID.randomUUID().toString();
