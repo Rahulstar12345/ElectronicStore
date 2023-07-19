@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
-            logger.info("Initiating the Service call for the save category data {} :",categoryDto);
+            logger.info("Initiating the Service call for the save category data : {} ",categoryDto);
 
         // creating categoryId :randomly
         String categoryId = UUID.randomUUID().toString();
@@ -42,13 +42,13 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = mapper.map(categoryDto, Category.class);
         Category savedCategory = categoryRepository.save(category);
-        logger.info("Complete the Service call for the save category data {} :",categoryDto);
+        logger.info("Complete the Service call for the save category data : {}",categoryDto);
         return mapper.map(savedCategory,CategoryDto.class);
     }
 
     @Override
     public CategoryDto update(CategoryDto categoryDto, String categoryId) {
-        logger.info("Initiating the Service call for the update category data with categoryId {} :",categoryId);
+        logger.info("Initiating the Service call for the update category data with categoryId : {}",categoryId);
         // get category of given id
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
         // update category details
@@ -57,16 +57,16 @@ public class CategoryServiceImpl implements CategoryService {
         category.setDescription(categoryDto.getDescription());
         category.setCoverImage(categoryDto.getCoverImage());
         Category updatedCategory = categoryRepository.save(category);
-        logger.info("Complete the Service call for the update category data with categoryId {} :",categoryId);
+        logger.info("Complete the Service call for the update category data with categoryId : {}",categoryId);
         return mapper.map(updatedCategory,CategoryDto.class);
     }
 
     @Override
     public void delete(String categoryId) {
-        logger.info("Initiating the Service call for the delete category data with categoryId {}:",categoryId);
+        logger.info("Initiating the Service call for the delete category data with categoryId : {}",categoryId);
         // get category of given id
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
-        logger.info("Complete the Service call for the delete category data with categoryId {} :",categoryId);
+        logger.info("Complete the Service call for the delete category data with categoryId : {}",categoryId);
         categoryRepository.delete(category);
 
     }
@@ -85,9 +85,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategoryId(String categoryId) {
-        logger.info("Initiating the Service call for the get category id data with categoryId {} :",categoryId);
+        logger.info("Initiating the Service call for the get category id data with categoryId : {}",categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
-        logger.info("Complete the Service call for the get category id data with categoryId {} :",categoryId);
+        logger.info("Complete the Service call for the get category id data with categoryId : {}",categoryId);
         return mapper.map(category,CategoryDto.class);
     }
 
