@@ -167,9 +167,9 @@ public class ProductController {
             @RequestParam(value = "sortBy",defaultValue = "title",required = false) String sortBy,
             @RequestParam(value = "sortDir",defaultValue = "asc",required = false) String sortDir
     ){
-        logger.info("Entering the request for the search all product data ");
+        logger.info("Entering the request for the search all product data with query : {} ",query);
         PageableResponse<ProductDto> pageableResponse = productService.searchByTitle(query,pageNumber, pageSize, sortBy, sortDir);
-        logger.info("Complete the request for the search all product data ");
+        logger.info("Complete the request for the search all product data with query : {} ",query);
         return new ResponseEntity<>(pageableResponse,HttpStatus.OK);
     }
 
