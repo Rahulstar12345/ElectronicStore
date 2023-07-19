@@ -159,6 +159,14 @@ public class UserController {
 
     // upload user image
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote upload user image
+     * @param image
+     * @param userId
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/image/{userId}")
     public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage")MultipartFile image,@PathVariable String userId) throws IOException {
         logger.info("Entering the request for the upload user image with userId  : {} ",userId);
@@ -177,6 +185,13 @@ public class UserController {
 
     //serve user image
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote serve user image
+     * @param userId
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/image/{userId}")
     public void serveUserImage(@PathVariable String userId, HttpServletResponse response) throws IOException {
         logger.info("Entering the request for the Serve user image with userId  : {}",userId);
