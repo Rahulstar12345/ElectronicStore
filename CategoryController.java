@@ -44,7 +44,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         // create service to save object
-        logger.info("Entering the request for the save category data:{}",categoryDto);
+        logger.info("Entering the request for the save category data :{}",categoryDto);
         CategoryDto categoryDto1 = categoryService.create(categoryDto);
         logger.info("Complete the request for the save category data:{}",categoryDto);
         return new ResponseEntity<>(categoryDto1, HttpStatus.CREATED);
