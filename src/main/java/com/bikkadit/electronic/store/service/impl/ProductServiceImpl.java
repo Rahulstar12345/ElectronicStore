@@ -172,7 +172,7 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Product> page = productRepository.findByCategory(category,pageable);
 
-        logger.info("Complete the Service call for the get all Category in  product with categoryId : {} ",categoryId);
+        logger.info("Complete the Service call for the get all Category in product with categoryId : {} ",categoryId);
         return Helper.getPageableResponse(page,ProductDto.class);
     }
 }
