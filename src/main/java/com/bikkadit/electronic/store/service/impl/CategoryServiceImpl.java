@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
-            logger.info("Initiating the Service call for the save category data : {} ",categoryDto);
+            logger.info("Initiating the Service call for the save category data ");
 
         // creating categoryId :randomly
         String categoryId = UUID.randomUUID().toString();
@@ -42,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = mapper.map(categoryDto, Category.class);
         Category savedCategory = categoryRepository.save(category);
-        logger.info("Complete the Service call for the save category data : {}",categoryDto);
+        logger.info("Complete the Service call for the save category data ");
         return mapper.map(savedCategory,CategoryDto.class);
     }
 
