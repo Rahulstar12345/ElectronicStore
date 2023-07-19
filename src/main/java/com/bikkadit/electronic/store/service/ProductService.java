@@ -46,4 +46,5 @@ public interface ProductService {
 
     PageableResponse<ProductDto> getAllByCategory(String categoryId);
 
+
 }
