@@ -35,6 +35,12 @@ public class ProductController {
 
     // create
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote create product
+     * @param productDto
+     * @return
+     */
     @PostMapping
     public ResponseEntity<ProductDto> createProduct(@Valid @RequestBody ProductDto productDto) {
         logger.info("Entering the request for the save product data ");
@@ -45,6 +51,13 @@ public class ProductController {
 
     //update
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote update product
+     * @param productDto
+     * @param productId
+     * @return
+     */
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto productDto,@PathVariable String productId) {
         logger.info("Entering the request for the update product data with productId : {} ",productId);
@@ -55,6 +68,12 @@ public class ProductController {
 
     // delete
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote delete product
+     * @param productId
+     * @return
+     */
     @DeleteMapping("/{productId}")
     public ResponseEntity<ApiResponseMessage> deleteProduct(@PathVariable String productId){
         logger.info("Entering the request for the delete product data with productId : {} ",productId);
@@ -66,6 +85,12 @@ public class ProductController {
 
     // get single id
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote get product by single id
+     * @param productId
+     * @return
+     */
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getSingleId(@PathVariable String productId) {
         logger.info("Entering the request for the get single  product data with productId : {} ",productId);
@@ -76,6 +101,15 @@ public class ProductController {
 
     // get all
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote get all product
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
+     * @return
+     */
     @GetMapping
     public ResponseEntity<PageableResponse<ProductDto>> getAll(
             @RequestParam(value = "pageNumber",defaultValue = "0",required = false) int pageNumber,
@@ -91,6 +125,15 @@ public class ProductController {
 
     // get all live
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote get live products
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
+     * @return
+     */
     @GetMapping("/live")
     public ResponseEntity<PageableResponse<ProductDto>> getAllLive(
             @RequestParam(value = "pageNumber",defaultValue = "0",required = false) int pageNumber,
@@ -106,6 +149,16 @@ public class ProductController {
 
     // search all
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote search product
+     * @param query
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
+     * @return
+     */
     @GetMapping("/search/{query}")
     public ResponseEntity<PageableResponse<ProductDto>> searchProduct(
             @PathVariable String query,
@@ -122,6 +175,14 @@ public class ProductController {
 
     // upload image
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote upload product image
+     * @param image
+     * @param productId
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/image/{productId}")
     public ResponseEntity<ImageResponse> uploadProductImage(@RequestParam("productImage")MultipartFile image,
                                                             @PathVariable String productId) throws IOException {
@@ -145,6 +206,13 @@ public class ProductController {
 
     //serve product image
 
+    /**
+     * @author Rahul_Sonawane
+     * @apiNote serve product image
+     * @param productId
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/image/{productId}")
     public void serveUserImage(@PathVariable String productId, HttpServletResponse response) throws IOException {
         logger.info("Entering the request for the Serve  product image with productId : {} ",productId);
