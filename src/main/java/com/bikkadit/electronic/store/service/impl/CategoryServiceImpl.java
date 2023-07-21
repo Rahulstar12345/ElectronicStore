@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public PageableResponse<CategoryDto> getAll(int pageNumber,int pageSize,String sortBy,String sortDir) {
-        logger.info("Initiating the Service call for the get all category data");
+        logger.info("Initiating the Service call for the get all category data ");
         Sort sort=(sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
 
         PageRequest pageable = PageRequest.of(pageNumber, pageSize,sort);
