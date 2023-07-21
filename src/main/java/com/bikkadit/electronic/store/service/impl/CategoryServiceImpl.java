@@ -12,11 +12,17 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,6 +37,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Value("${category.profile.image.path}")
+    private String imageUploadPath;
 
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
@@ -66,8 +75,23 @@ public class CategoryServiceImpl implements CategoryService {
         logger.info("Initiating the Service call for the delete category data with categoryId : {}",categoryId);
         // get category of given id
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
-        logger.info("Complete the Service call for the delete category data with categoryId : {}",categoryId);
+
+        // delete user profile image
+        // images/user/abc.png
+        String fullPath = imageUploadPath + category.getCoverImage();
+        try {
+            Path path = Paths.get(fullPath);
+            Files.delete(path);
+        }catch (NoSuchFileException ex){
+            logger.info("User image not found in folder !!");
+            ex.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
         categoryRepository.delete(category);
+        logger.info("Complete the Service call for the delete category data with categoryId : {}",categoryId);
+
 
     }
 
