@@ -110,7 +110,7 @@ public class CategoryController {
             @RequestParam(value = "sortBy",defaultValue = "title",required = false) String sortBy,
             @RequestParam(value = "sortDir",defaultValue = "asc",required = false) String sortDir
     ) {
-        logger.info("Entering the request for get all category data");
+        logger.info("Entering the request  for get all category data");
         PageableResponse<CategoryDto> pageableResponse = categoryService.getAll(pageNumber, pageSize, sortBy, sortDir);
         logger.info("Complete the request for get all category data");
         return new ResponseEntity<>(pageableResponse,HttpStatus.OK);
