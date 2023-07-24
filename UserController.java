@@ -142,9 +142,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
     }
 
-
         // search user
-
     /**
      * @author Rahul_Sonawane
      * @apiNote Search User
