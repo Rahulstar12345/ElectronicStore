@@ -86,7 +86,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String userId) {
         logger.info("Initiating the Service call for the delete user data with userId : {}", userId);
-
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
 
         // delete user profile image
@@ -104,22 +103,16 @@ public class UserServiceImpl implements UserService {
         // delete user
         userRepository.delete(user);
         logger.info("Complete the Service call for the delete user data with userId : {}", userId);
-
-
     }
 
     @Override
     public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir) {
         logger.info("Initiating the Service call for the get all user data ");
-
         Sort sort = (sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
-
-
         // pageNumber default starts from 0
         Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
         Page<User> page = userRepository.findAll(pageable);
         PageableResponse<UserDto> response = Helper.getPageableResponse(page, UserDto.class);
-
         logger.info("Complete the Service call for the get all user data ");
         return response;
     }
@@ -127,9 +120,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(String userId) {
         logger.info("Initiating the Service call for the get user by using id with userId : {}",userId);
-
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
-
         logger.info("Complete the Service call for the get user by using id with userId : {} ",userId);
         return mapper.map(user,UserDto.class);
     }
@@ -137,20 +128,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String email) {
         logger.info("Initiating the Service call for the get user by using email with email : {} ",email);
-
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND));
         logger.info("Complete the Service call for the get user by using email with email : {} ",email);
-
         return mapper.map(user,UserDto.class);
     }
 
     @Override
     public List<UserDto> searchUser(String keyword) {
         logger.info("Initiating the Service call for the search user data with keyword : {} ",keyword);
-
         List<User> users = userRepository.findByNameContaining(keyword);
         List<UserDto> dtoList = users.stream().map(user -> mapper.map(user,UserDto.class)).collect(Collectors.toList());
-
         logger.info("Complete the Service call for the search user data with keyword : {} ",keyword);
         return dtoList;
     }
