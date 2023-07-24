@@ -50,7 +50,6 @@ public class ProductController {
     }
 
     //update
-
     /**
      * @author Rahul_Sonawane
      * @apiNote update product
@@ -67,7 +66,6 @@ public class ProductController {
     }
 
     // delete
-
     /**
      * @author Rahul_Sonawane
      * @apiNote delete product
@@ -84,7 +82,6 @@ public class ProductController {
     }
 
     // get single id
-
     /**
      * @author Rahul_Sonawane
      * @apiNote get product by single id
@@ -100,7 +97,6 @@ public class ProductController {
     }
 
     // get all
-
     /**
      * @author Rahul_Sonawane
      * @apiNote get all product
@@ -124,7 +120,6 @@ public class ProductController {
     }
 
     // get all live
-
     /**
      * @author Rahul_Sonawane
      * @apiNote get live products
@@ -148,7 +143,6 @@ public class ProductController {
     }
 
     // search all
-
     /**
      * @author Rahul_Sonawane
      * @apiNote search product
@@ -174,7 +168,6 @@ public class ProductController {
     }
 
     // upload image
-
     /**
      * @author Rahul_Sonawane
      * @apiNote upload product image
@@ -196,16 +189,13 @@ public class ProductController {
 
         ProductDto updateProduct = productService.updateProduct(product, productId);
 
-
         ImageResponse response = ImageResponse.builder().imageName(updateProduct.getProductImageName()).message(AppConstants.PRODUCT_IMAGE)
                 .success(true).status(HttpStatus.CREATED).build();
         logger.info("Complete the request for the upload  product image with productId : {} ",productId);
         return  new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
-
     //serve product image
-
     /**
      * @author Rahul_Sonawane
      * @apiNote serve product image
