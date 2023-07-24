@@ -44,11 +44,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
         logger.info("Initiating the Service call for the save category data ");
-
         // creating categoryId :randomly
         String categoryId = UUID.randomUUID().toString();
         categoryDto.setCategoryId(categoryId);
-
         Category category = mapper.map(categoryDto, Category.class);
         Category savedCategory = categoryRepository.save(category);
         logger.info("Complete the Service call for the save category data ");
@@ -61,7 +59,6 @@ public class CategoryServiceImpl implements CategoryService {
         // get category of given id
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
         // update category details
-
         category.setTitle(categoryDto.getTitle());
         category.setDescription(categoryDto.getDescription());
         category.setCoverImage(categoryDto.getCoverImage());
@@ -75,7 +72,6 @@ public class CategoryServiceImpl implements CategoryService {
         logger.info("Initiating the Service call for the delete category data with categoryId : {}",categoryId);
         // get category of given id
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND));
-
         // delete user profile image
         // images/user/abc.png
         String fullPath = imageUploadPath + category.getCoverImage();
@@ -88,18 +84,14 @@ public class CategoryServiceImpl implements CategoryService {
         }catch (IOException e){
             e.printStackTrace();
         }
-
         categoryRepository.delete(category);
         logger.info("Complete the Service call for the delete category data with categoryId : {}",categoryId);
-
-
     }
 
     @Override
     public PageableResponse<CategoryDto> getAll(int pageNumber,int pageSize,String sortBy,String sortDir) {
         logger.info("Initiating the Service call for the get all category data ");
         Sort sort=(sortDir.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
-
         PageRequest pageable = PageRequest.of(pageNumber, pageSize,sort);
         Page<Category> page = categoryRepository.findAll(pageable);
         PageableResponse<CategoryDto> pageableResponse = Helper.getPageableResponse(page, CategoryDto.class);
