@@ -58,7 +58,6 @@ public class CategoryController {
     }
 
     // update
-
     /**
      * @author Rahul_Sonawane
      * @apiNote update category
@@ -75,7 +74,6 @@ public class CategoryController {
     }
 
         // delete
-
     /**
      * @author Rahul_Sonawane
      * @apiNote delete category
@@ -93,7 +91,6 @@ public class CategoryController {
     }
 
         // get all
-
     /**
      * @author Rahul_Sonawane
      * @apiNote get all categories
@@ -114,12 +111,9 @@ public class CategoryController {
         PageableResponse<CategoryDto> pageableResponse = categoryService.getAll(pageNumber, pageSize, sortBy, sortDir);
         logger.info("Complete the request for get all category data");
         return new ResponseEntity<>(pageableResponse,HttpStatus.OK);
-
-
     }
 
    // get single category detail
-
     /**
      * @author Rahul_Sonawane
      * @apiNote get single category id
@@ -132,13 +126,9 @@ public class CategoryController {
         CategoryDto categoryDto = categoryService.getCategoryId(categoryId);
         logger.info("Complete the request for get category data with categoryId : {} ",categoryId);
         return ResponseEntity.ok(categoryDto);
-
     }
 
-    // search category
-
     // cover category image
-
     /**
      * @author Rahul_Sonawane
      * @apiNote upload category image
@@ -160,7 +150,6 @@ public class CategoryController {
     }
 
     // serve category image
-
     /**
      * @author Rahul_Sonawane
      * @apiNote serve category image
@@ -181,7 +170,6 @@ public class CategoryController {
     }
 
     // create product with category
-
     /**
      * @author Rahul_Sonawane
      * @apiNote create product with category
@@ -201,7 +189,6 @@ public class CategoryController {
     }
 
     // update category with product
-
     /**
      * @author Rahul_Sonawane
      * @apiNote upload category with product
