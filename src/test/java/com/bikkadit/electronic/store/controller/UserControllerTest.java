@@ -71,8 +71,22 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUserTest(){
+    public void updateUserTest() throws Exception {
+        //  /user/{userId} + PUT request + json
 
+        String userId="123";
+
+        UserDto dto = this.mapper.map(user, UserDto.class);
+
+        Mockito.when(userService.updateUser(Mockito.any(),Mockito.anyString())).thenReturn(dto);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/users/"+userId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(convertObjectToJsonString(user))
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").exists());
     }
 
 
