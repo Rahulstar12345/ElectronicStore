@@ -1,5 +1,6 @@
 package com.bikkadit.electronic.store.service;
 
+import com.bikkadit.electronic.store.dto.PageableResponse;
 import com.bikkadit.electronic.store.dto.ProductDto;
 import com.bikkadit.electronic.store.entity.Product;
 import com.bikkadit.electronic.store.repository.ProductRepository;
@@ -11,7 +12,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -93,6 +99,40 @@ public class ProductServiceTest {
         ProductDto singleId = productService.getSingleId(productId);
         System.out.println(singleId.getTitle());
         Assertions.assertEquals(product.getTitle(),singleId.getTitle(),"product name not matched!!");
+    }
+
+    @Test
+    public void getAllProductTest(){
+       Product product1=Product.builder()
+                .title("iPhone 13 pro")
+                .description("It s very expensive mobile")
+                .price(130000)
+                .discountedPrice(110000)
+                .quantity(10)
+                .live(true)
+                .stock(true)
+                .productImageName("iphone13.png")
+                .build();
+
+      Product  product2=Product.builder()
+                .title("iPhone 14 pro max")
+                .description("It s very expensive mobile")
+                .price(160000)
+                .discountedPrice(140000)
+                .quantity(15)
+                .live(true)
+                .stock(true)
+                .productImageName("iphone14.png")
+                .build();
+
+        List<Product> productList = Arrays.asList(product, product1, product2);
+        Page<Product> page=new PageImpl<>(productList);
+        Mockito.when(productRepository.findAll((Pageable) Mockito.any())).thenReturn(page);
+        PageableResponse<ProductDto> allproducts = productService.getAll(1, 2, "title", "asc");
+       System.out.println(allproducts.getTotalElements());
+        Assertions.assertEquals(3,allproducts.getContent().size());
+
+
     }
 
 }
