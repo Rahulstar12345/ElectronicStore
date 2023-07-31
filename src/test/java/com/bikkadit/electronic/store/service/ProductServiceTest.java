@@ -85,4 +85,14 @@ public class ProductServiceTest {
         Mockito.verify(productRepository,Mockito.times(1)).delete(product);
     }
 
+    // get single product id test
+    @Test
+    public void getSingleProductIdTest(){
+        String productId="prov454df5";
+        Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+        ProductDto singleId = productService.getSingleId(productId);
+        System.out.println(singleId.getTitle());
+        Assertions.assertEquals(product.getTitle(),singleId.getTitle(),"product name not matched!!");
+    }
+
 }
