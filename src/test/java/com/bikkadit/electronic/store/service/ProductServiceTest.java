@@ -79,12 +79,10 @@ public class ProductServiceTest {
     // delete product test
     @Test
     public void deleteProductTest(){
-
         String productId="43grf43r";
         Mockito.when(productRepository.findById("43grf43r")).thenReturn(Optional.of(product));
         productService.delete(productId);
         Mockito.verify(productRepository,Mockito.times(1)).delete(product);
-
     }
 
 }
