@@ -135,4 +135,35 @@ public class ProductServiceTest {
 
     }
 
+    @Test
+    public void getAllLiveProductTest(){
+        Product product1=Product.builder()
+                .title("iPhone 13 pro")
+                .description("It s very expensive mobile")
+                .price(130000)
+                .discountedPrice(110000)
+                .quantity(10)
+                .live(true)
+                .stock(true)
+                .productImageName("iphone13.png")
+                .build();
+
+        Product  product2=Product.builder()
+                .title("iPhone 14 pro max")
+                .description("It s very expensive mobile")
+                .price(160000)
+                .discountedPrice(140000)
+                .quantity(15)
+                .live(false)
+                .stock(true)
+                .productImageName("iphone14.png")
+                .build();
+        List<Product> productList = Arrays.asList(product, product1);
+        Page<Product> page=new PageImpl<>(productList);
+        Mockito.when(productRepository.findByLiveTrue((Pageable) Mockito.any())).thenReturn(page);
+        PageableResponse<ProductDto> allLive = productService.getAllLive(1, 2, "title", "asc");
+        System.out.println(allLive.getTotalElements());
+        Assertions.assertEquals(2,allLive.getContent().size());
+    }
+
 }
