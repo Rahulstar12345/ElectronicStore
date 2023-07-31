@@ -50,7 +50,6 @@ public class UserServiceTest {
     }
 
     // create testing for user
-
     @Test
     public void createUserTest(){
         Mockito.when(userRepository.save(Mockito.any())).thenReturn(user);
@@ -75,17 +74,13 @@ public class UserServiceTest {
 
         UserDto updateUser = userService.updateUser(userDto, userId);
      //   UserDto updateUser = mapper.map(user, UserDto.class);
-
         System.out.println(updateUser.getName());
         System.out.println(updateUser.getGender());
         Assertions.assertNotNull(userDto);
         Assertions.assertEquals(userDto.getName(),updateUser.getName(),"Name is not valid !!");
-
-
     }
 
     // delete user test
-
     @Test
     public void deleteUserTest(){
 
@@ -97,7 +92,6 @@ public class UserServiceTest {
     }
 
     // get all user test
-
     @Test
     public void getAllUserTest(){
 
@@ -137,9 +131,7 @@ public class UserServiceTest {
 
         String userId="userIdTest";
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-
         // actual call of service method
-
         UserDto userDto = userService.getUserById(userId);
         System.out.println(userDto.getName());
         Assertions.assertNotNull(userDto);
@@ -147,7 +139,6 @@ public class UserServiceTest {
     }
 
     // get user by email id test
-
     @Test
     public void getUserByEmailTest(){
 
@@ -163,7 +154,6 @@ public class UserServiceTest {
     }
 
     // search user
-
     @Test
     public void searchUserTest(){
 
