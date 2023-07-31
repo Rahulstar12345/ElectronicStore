@@ -166,4 +166,33 @@ public class ProductServiceTest {
         Assertions.assertEquals(2,allLive.getContent().size());
     }
 
+//    @Test
+//    public void searchByTitleTest(){
+//        Product product1=Product.builder()
+//                .title("vivo")
+//                .description("It s very expensive mobile")
+//                .price(130000)
+//                .discountedPrice(110000)
+//                .quantity(10)
+//                .live(true)
+//                .stock(true)
+//                .productImageName("iphone13.png")
+//                .build();
+//
+//        Product  product2=Product.builder()
+//                .title("iPhone 14 pro max")
+//                .description("It s very expensive mobile")
+//                .price(160000)
+//                .discountedPrice(140000)
+//                .quantity(15)
+//                .live(true)
+//                .stock(true)
+//                .productImageName("iphone14.png")
+//                .build();
+//
+//        String subTitle="vivo";
+//        Arrays.asList(product,pro)
+//
+//    }
+
 }
