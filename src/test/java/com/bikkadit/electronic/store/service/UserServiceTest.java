@@ -124,7 +124,7 @@ public class UserServiceTest {
 
     }
 
-    // get all users Test
+    // get single users Test
 
     @Test
     public void getUserByIdTest(){
