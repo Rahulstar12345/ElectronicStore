@@ -185,11 +185,11 @@ public class UserServiceTest {
                 .build();
 
         String keywords="Sonawane";
-        Mockito.when(userRepository.findByNameContaining(keywords)).thenReturn(Arrays.asList(user,user1,user2,user3));
+        Mockito.when(userRepository.findByNameContaining(keywords)).thenReturn(Arrays.asList(user,user1,user2));
 
         List<UserDto> userDtos = userService.searchUser(keywords);
 
-        Assertions.assertEquals(4,userDtos.size(),"Size Not Match !!");
+        Assertions.assertEquals(3,userDtos.size(),"Size Not Match !!");
 
     }
 
