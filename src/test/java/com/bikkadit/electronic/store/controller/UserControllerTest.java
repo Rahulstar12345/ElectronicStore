@@ -149,6 +149,7 @@ public class UserControllerTest {
                .andExpect(status().isOk());
     }
 
+    // get user by email
     @Test
     public void getUserByEmail() throws Exception {
         String emailId="aryan@gmail.com";
