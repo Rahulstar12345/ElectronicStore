@@ -128,7 +128,6 @@ public class UserControllerTest {
         pageableResponse.setTotalElements(1000);
 
         Mockito.when(userService.getAllUser(Mockito.anyInt(),Mockito.anyInt(),Mockito.anyString(),Mockito.anyString())).thenReturn(pageableResponse);
-
         this.mockMvc.perform(MockMvcRequestBuilders.get("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
