@@ -135,6 +135,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    // get user by id test
     @Test
     public void getUserByIdTest() throws Exception {
         String userId="4445461dw";
