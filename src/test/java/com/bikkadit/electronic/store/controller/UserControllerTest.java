@@ -87,6 +87,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name").exists());
     }
 
+    // delete user test
     @Test
     public void deleteUserTest() throws Exception {
         String userId="124";
