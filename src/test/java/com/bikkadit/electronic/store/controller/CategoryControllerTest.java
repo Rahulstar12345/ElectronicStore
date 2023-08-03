@@ -95,6 +95,7 @@ public class CategoryControllerTest {
                 .andExpect(status().isOk());
     }
 
+    // get All category test
     @Test
     public void getAllCategoryTest() throws Exception {
        CategoryDto dto1 = CategoryDto.builder()
