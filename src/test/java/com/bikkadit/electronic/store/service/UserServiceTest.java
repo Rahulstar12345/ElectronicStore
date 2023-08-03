@@ -158,7 +158,7 @@ public class UserServiceTest {
     public void searchUserTest(){
 
         User  user1 = User.builder()
-                .name("Nital Sonawane")
+                .name("Nital ")
                 .email("nital@gmail.com")
                 .password("nit1232")
                 .gender("Female")
@@ -188,7 +188,7 @@ public class UserServiceTest {
         Mockito.when(userRepository.findByNameContaining(keywords)).thenReturn(Arrays.asList(user,user1,user2));
 
         List<UserDto> userDtos = userService.searchUser(keywords);
-
+      //  System.out.println(userDtos);
         Assertions.assertEquals(3,userDtos.size(),"Size Not Match !!");
 
     }
