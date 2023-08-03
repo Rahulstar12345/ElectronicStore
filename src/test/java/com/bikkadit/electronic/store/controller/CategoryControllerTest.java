@@ -125,6 +125,7 @@ public class CategoryControllerTest {
                 .andExpect(status().isOk());
     }
 
+    // get category by id test
     @Test
     public void getCategoryByIdTest() throws Exception {
         String categoryId="33fer5";
