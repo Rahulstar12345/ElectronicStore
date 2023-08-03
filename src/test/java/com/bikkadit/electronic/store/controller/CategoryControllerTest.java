@@ -81,6 +81,7 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("$.title").exists());
     }
 
+    // delete category test
     @Test
     public void deleteCategoryTest() throws Exception {
 
