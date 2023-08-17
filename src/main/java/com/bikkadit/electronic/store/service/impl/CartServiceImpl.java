@@ -6,6 +6,7 @@ import com.bikkadit.electronic.store.entity.Cart;
 import com.bikkadit.electronic.store.entity.CartItem;
 import com.bikkadit.electronic.store.entity.Product;
 import com.bikkadit.electronic.store.entity.User;
+import com.bikkadit.electronic.store.exception.BadApiRequestException;
 import com.bikkadit.electronic.store.exception.ResourceNotFoundException;
 import com.bikkadit.electronic.store.repository.CartItemRepository;
 import com.bikkadit.electronic.store.repository.CartRepository;
@@ -43,6 +44,10 @@ public class CartServiceImpl implements CartService {
 
         int quantity = request.getQuantity();
         String productId = request.getProductId();
+
+        if(quantity<=0){
+            throw  new BadApiRequestException("Requested quantity is not valid !!");
+        }
 
         // getch the product
         Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found in database !! "));
@@ -91,7 +96,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeItemFromCart(String userId, int cartItem) {
 
-
+        CartItem cartItem1 = cartItemRepository.findById(cartItem).orElseThrow(() -> new ResourceNotFoundException("cart item not found in database !!"));
+        cartItemRepository.delete(cartItem1);
 
     }
 
