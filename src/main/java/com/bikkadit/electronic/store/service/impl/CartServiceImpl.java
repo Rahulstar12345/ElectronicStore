@@ -103,6 +103,17 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void clearCart(String userId) {
+        // fetch the user from db
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user not found in database !!"));
+        Cart cart = cartRepository.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("cart of given user not found !!"));
+        cart.getItems().clear();
+        cartRepository.save(cart);
+    }
 
+    @Override
+    public CartDto getCartByUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("user not found in database !!"));
+        Cart cart = cartRepository.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("cart of given user not found !!"));
+        return mapper.map(cart,CartDto.class);
     }
 }
